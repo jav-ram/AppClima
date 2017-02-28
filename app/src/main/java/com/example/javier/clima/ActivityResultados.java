@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import java.net.URL;
+import java.text.DecimalFormat;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -13,7 +14,6 @@ import org.json.JSONObject;
 public class ActivityResultados extends AppCompatActivity {
 
     NetworkUtils network;
-    String city;
     String back;
     TextView txtTemperatura;
     TextView txtHumedad;
@@ -25,6 +25,7 @@ public class ActivityResultados extends AppCompatActivity {
     JSONObject res;
     JSONObject main;
 
+    String city;
     String actualCity;
     double temp;
     double pressure;
@@ -37,9 +38,12 @@ public class ActivityResultados extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resultados2);
-        city = getIntent().getStringExtra("city");
-        network = new NetworkUtils();
+
+        //String de la ciudad
         city = getIntent().getExtras().getString("city");
+        //Network
+        network = new NetworkUtils();
+        network = new NetworkUtils();
         txtTemperatura = (TextView) findViewById(R.id.txtTemperatura);
         txtHumedad = (TextView) findViewById(R.id.txtHumedad);
         txtPresion = (TextView) findViewById(R.id.txtPresion);
@@ -48,7 +52,7 @@ public class ActivityResultados extends AppCompatActivity {
         txtMin = (TextView) findViewById(R.id.txtMin);
         prgBar = (ProgressBar) findViewById(R.id.circularProgressbar);
 
-        URL SearchUrl = network.buildUrl("Guatemala");
+        URL SearchUrl = network.buildUrl(city);
         new QueryTask().execute(SearchUrl);
 
     }
@@ -91,7 +95,7 @@ public class ActivityResultados extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 txtCity.setText(name);
-                txtTemperatura.setText((temp-273.15)+" C\n"+temp+" K");
+                txtTemperatura.setText(RoundTo2Decimals(temp-273)+" C\n"+temp+" K");
                 txtHumedad.setText(""+humidity);
                 txtPresion.setText(""+pressure);
                 txtMax.setText((tempMax-273.15)+" C\n"+tempMax+" K");
@@ -103,5 +107,8 @@ public class ActivityResultados extends AppCompatActivity {
             super.onPostExecute(s);
         }
     }
-
+    double RoundTo2Decimals(double val) {
+        DecimalFormat df2 = new DecimalFormat("###.##");
+        return Double.valueOf(df2.format(val));
+    }
 }

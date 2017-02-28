@@ -2,6 +2,7 @@ package com.example.javier.clima;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -30,7 +31,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (view.getId()){
             case R.id.btnIngresar:{
                 Intent next = new Intent(this, ActivityResultados.class);
-                next.putExtra("city", txtCity.getText());
+                next.putExtra("city", ""+txtCity.getText());
+                AlertDialog.Builder dlgAlert  = new AlertDialog.Builder(this);
+                dlgAlert.setMessage(txtCity.getText());
                 startActivity(next);
                 break;
             }
