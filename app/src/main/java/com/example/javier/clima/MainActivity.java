@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 Intent next = new Intent(this, ActivityResultados.class);
                 next.putExtra("city", txtCity.getText());
                 startActivity(next);
-                finish();
                 break;
             }
         }

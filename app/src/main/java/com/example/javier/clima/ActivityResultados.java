@@ -25,7 +25,6 @@ public class ActivityResultados extends AppCompatActivity {
     JSONObject res;
     JSONObject main;
 
-
     String actualCity;
     double temp;
     double pressure;
@@ -38,7 +37,7 @@ public class ActivityResultados extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_resultados2);
-
+        city = getIntent().getStringExtra("city");
         network = new NetworkUtils();
         city = getIntent().getExtras().getString("city");
         txtTemperatura = (TextView) findViewById(R.id.txtTemperatura);
